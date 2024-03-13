@@ -1,7 +1,9 @@
 import React from 'react';
-import { Container, Nav, Navbar, NavDropdown, Form, Button, Offcanvas } from 'react-bootstrap';
-import Sidebar from "./components/Sidebar/Sidebar"
+import { Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import {Routes,Route} from "react-router-dom"
+import Dashboard from "./Routes/Dashboard"
+import Details from "./Routes/Details"
+import Lists from "./Routes/List"
 
 import './App.css';
 
@@ -12,14 +14,14 @@ function App() {
     <div className="App">
       <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">Garabu</Navbar.Brand>
+        <Navbar.Brand href="/">Garabu</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/Details">전체 거래 내역</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/F3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
               </NavDropdown.Item>
@@ -35,10 +37,9 @@ function App() {
     </Navbar>
 
     <Routes>
-      <Route path='/' element={
-
-        
-      } />
+      <Route path='/' element={ <Dashboard />} />
+      <Route path='/Details' element={<Details />} />
+      <Route path='/List' element={<Lists />} />
     </Routes>
 
 
