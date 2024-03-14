@@ -4,6 +4,7 @@ import {Routes,Route} from "react-router-dom"
 import Dashboard from "./Routes/Dashboard"
 import Details from "./Routes/Details"
 import Lists from "./Routes/List"
+import Insertdata from './Routes/Insertdata';
 
 import './App.css';
 
@@ -21,7 +22,7 @@ function App() {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/Details">전체 거래 내역</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/F3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="/input">추가하기</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
               </NavDropdown.Item>
@@ -38,8 +39,9 @@ function App() {
 
     <Routes>
       <Route path='/' element={ <Dashboard />} />
-      <Route path='/Details' element={<Details />} />
-      <Route path='/List' element={<Lists />} />
+      <Route path='/details' element={<Details />} />
+      <Route path='/list' element={<Lists />} />
+      <Route path='/input' element={<Insertdata />} />
     </Routes>
 
 
