@@ -1,15 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface TransactionState {
-    id : Object;
-    date: Date; //YYYY-MM-DD형식
-    amount: number; // 금액
-    creater: string; //작성자
-    customer: string;
-    category: string; // 분류(객체)
-    asset: string;         // 자산내용
-    contents: string; //내용
-    amounttype: string; // 수입지출
+    id : Object,
+    date: Date, //YYYY-MM-DD형식
+    amount: number, // 금액
+    creater: string, //작성자
+    customer: string,
+    category: string, // 분류(객체)
+    asset: string,         // 자산내용
+    contents: string, //내용
+    amounttype: string // 수입지출
 
 }
 

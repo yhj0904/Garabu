@@ -4,6 +4,11 @@ function Dashboard() {
     return (
 
         <Container>
+
+            <Row>
+                <Col>달력</Col>
+            </Row>
+
             <div>
             <h3> Dashboard</h3>
             </div>
