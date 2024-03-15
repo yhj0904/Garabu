@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 
 // 타입스크립트를 사용하여 컴포넌트 props 정의 (필요한 경우)
 interface DateInputProps {
-  // 예제에서는 사용하지 않지만 확장성을 위해 정의
+  value: string; // 상위 컴포넌트로부터 받은 현재 날짜 값
+  onChange: (value: string) => void; // 날짜 변경 시 호출될 함수
 }
 
-const DateInput: React.FC<DateInputProps> = (props) => {
+const DateInput: React.FC<DateInputProps> = ({ value, onChange }) => {
   // 상태 정의 및 초기화
   const [selectedDate, setSelectedDate] = useState<string>("");
 

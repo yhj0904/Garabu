@@ -7,6 +7,7 @@ import Lists from "./Routes/List"
 import Insertdata from './Routes/Insertdata';
 
 import './App.css';
+import TransactionDetail from './Routes/TransactionDetail';
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
 
     <Routes>
       <Route path='/' element={ <Dashboard />} />
-      <Route path='/details' element={<Details />} />
+      <Route path='/details' element={<TransactionDetail />} />
       <Route path='/list' element={<Lists />} />
       <Route path='/input' element={<Insertdata />} />
     </Routes>
