@@ -43,6 +43,7 @@ function App() {
       <Route path='/details' element={<TransactionDetail />} />
       <Route path='/list' element={<Lists />} />
       <Route path='/input' element={<Insertdata />} />
+      <Route path='*' element={<div>404 not found</div>} />
     </Routes>
 
 
