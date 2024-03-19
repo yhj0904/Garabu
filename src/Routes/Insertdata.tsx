@@ -20,7 +20,7 @@ function Insertdata() {
     const [customer, setCustomer] = useState('');
     const [category, setCategory] = useState('');
     const [asset, setAsset] = useState('');
-    const [contents, setContents] = useState('');
+    const [memo, setMemo] = useState('');
     const [amounttype, setAmounttype] = useState('');
 
 
@@ -33,7 +33,7 @@ function Insertdata() {
             customer,
             category,
             asset,
-            contents,
+            memo,
             amounttype,
         };
         dispatch(updateTransaction(newTransaction));
@@ -87,11 +87,21 @@ function Insertdata() {
                             <option value="cradit card">cradit card</option>
                             <option value="add">add</option>
                         </Form.Select>
-                        <Form.Label htmlFor="inputContents">내용</Form.Label>
+                        
+                        <Form.Label htmlFor="inputContents">상세 내용 거래내용 제목</Form.Label>  
                         <Form.Control
                             type="text"
                             id="inputContents"
                             onChange={(e) => setContents(e.target.value)}
+                            aria-describedby="passwordHelpBlock"
+                        />
+
+
+                        <Form.Label htmlFor="inputMemo">메모</Form.Label>
+                        <Form.Control
+                            type="text"
+                            id="inputMemo"
+                            onChange={(e) => setMemo(e.target.value)}
                             aria-describedby="passwordHelpBlock"
                         />
                         <Form.Text id="passwordHelpBlock" muted>
