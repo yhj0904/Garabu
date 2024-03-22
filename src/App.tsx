@@ -8,6 +8,7 @@ import Insertdata from './Routes/Insertdata';
 
 import './App.css';
 import TransactionDetail from './Routes/TransactionDetail';
+import Register from './Routes/Register';
 
 function App() {
   return (
@@ -24,8 +25,8 @@ function App() {
             <Nav.Link href="/Details">전체 거래 내역</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="/input">추가하기</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+              <NavDropdown.Item href="/register">
+                회원가입
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -44,6 +45,7 @@ function App() {
       <Route path='/list' element={<Lists />} />
       <Route path='/input' element={<Insertdata />} />
       <Route path='*' element={<div>404 not found</div>} />
+      <Route path='/register' element={<Register />} />
     </Routes>
 
 

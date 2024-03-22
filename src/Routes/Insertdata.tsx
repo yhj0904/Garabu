@@ -20,6 +20,7 @@ function Insertdata() {
     const [customer, setCustomer] = useState('');
     const [category, setCategory] = useState('');
     const [asset, setAsset] = useState('');
+    const [contents, setContents] = useState('');
     const [memo, setMemo] = useState('');
     const [amounttype, setAmounttype] = useState('');
 
@@ -33,6 +34,7 @@ function Insertdata() {
             customer,
             category,
             asset,
+            contents,
             memo,
             amounttype,
         };
