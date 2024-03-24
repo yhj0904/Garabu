@@ -1,31 +1,47 @@
 import axios from "axios";
 import { useState } from "react";
 import {Col, Row, Form, Button } from "react-bootstrap";
+import qs from "qs";
 
 function Login(){
 
-    const [email, setEmail] = useState('');
+  
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
 
     const handleSaveChanges = async(e:any) =>{
       e.preventDefault();
-      const res = axios.post('http://192.168.0.9:8080/join',{
-        email : email,
-        password : password
-      })
-      console.log('전송~~')
-          console.log(res)
+      const data = qs.stringify({
+        username: name,
+        password: password,
+      });
+    
+      const config = {
+        method: 'post',
+        url: 'http://localhost:8080/login',
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data : data
+      };
+    
+      axios(config).then((response) => {
+        console.log(JSON.stringify(response.data));
+      }).catch((error) => {
+        console.error(error);
+      });
+    
     }
 
     return(
         <Form onSubmit={handleSaveChanges}> 
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
         <Form.Label column sm={2}>
-          Email
+          name
         </Form.Label>
         <Col sm={10}>
-          <Form.Control type="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
+          <Form.Control type="username" placeholder="username" onChange={(e)=>setName(e.target.value)} />
         </Col>
       </Form.Group>
 

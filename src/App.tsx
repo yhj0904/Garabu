@@ -9,6 +9,7 @@ import Insertdata from './Routes/Insertdata';
 import './App.css';
 import TransactionDetail from './Routes/TransactionDetail';
 import Register from './Routes/Register';
+import Login from './Routes/Login';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
               <NavDropdown.Item href="/register">
                 회원가입
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="/login">Login</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link
@@ -46,6 +47,7 @@ function App() {
       <Route path='/input' element={<Insertdata />} />
       <Route path='*' element={<div>404 not found</div>} />
       <Route path='/register' element={<Register />} />
+      <Route path='/login' element={<Login /> }/>
     </Routes>
 
 

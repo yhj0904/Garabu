@@ -11,11 +11,15 @@ function Register(){
 
     const handleSaveChanges = async(e:any) =>{
       e.preventDefault();
-      const res = axios.post('http://192.168.0.9:8080/join',{
+      const res = axios.post('http://localhost:8080/join',{
         username: name,
         email : email,
         password : password
+      }).then((e)=>{
+        alert(JSON.stringify(e.data))
       })
+      
+      console.log(name,email,password);
       console.log('전송~~')
           console.log(res)
     }
