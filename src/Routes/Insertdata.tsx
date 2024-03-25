@@ -5,6 +5,7 @@ import { updateTransaction } from "../store/createSlice";
 import { RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 function Insertdata() {
     const transactionData = useSelector((state: RootState) => { return state.transaction });
@@ -25,7 +26,7 @@ function Insertdata() {
     const [amounttype, setAmounttype] = useState('');
 
 
-    const handleSaveChanges = () => {
+    const handleSaveChanges = async() => {
         const newTransaction = {
             id: Date.now(), // id는 예시로 현재 시간의 타임스탬프를 사용
             date: selectedDate.toISOString().slice(0, 10), // 'YYYY-MM-DD'
@@ -39,6 +40,17 @@ function Insertdata() {
             amounttype,
         };
         dispatch(updateTransaction(newTransaction));
+
+        axios.post('http://localhost:8080/api/v2/ledger',{
+            date : newTransaction.date,
+            amount: newTransaction.amount,
+            description: newTransaction.contents,
+            memo : newTransaction.memo,
+            amounttype :newTransaction.amounttype
+
+        }).then((e)=>{
+            alert(JSON.stringify(e.data))
+        })
         navigate('/details'); // 세부 정보 페이지로 이동
     };
 
@@ -119,7 +131,7 @@ function Insertdata() {
                                     name="amountType"
                                     id="transfer"
                                     required
-                                    onChange={(e) => setAmounttype("transfer")}
+                                    onChange={(e) => setAmounttype("TRANSFER")}
                                 />
                                 <Form.Check
                                     inline
@@ -129,7 +141,7 @@ function Insertdata() {
                                     id="expenditure"
                                     required
                                     defaultChecked
-                                    onChange={(e) => setAmounttype("expenditure")}
+                                    onChange={(e) => setAmounttype("EXPENSE")}
                                 />
                                 <Form.Check
                                     inline
@@ -138,7 +150,7 @@ function Insertdata() {
                                     name="amountType"
                                     id="income"
                                     required
-                                    onChange={(e) => setAmounttype('income')}
+                                    onChange={(e) => setAmounttype('INCOME')}
                                 />
                             </div>
                         </Form>
