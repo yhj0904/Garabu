@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
-import {Col, Row, Form, Button } from "react-bootstrap";
+import {Col, Row, Form, Button,Container } from "react-bootstrap";
 import qs from "qs";
+import OAuth2Login from "../components/OAuth2Login";
 
 function Login(){
 
   
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-
 
     const handleSaveChanges = async(e:any) =>{
       e.preventDefault();
@@ -19,7 +19,7 @@ function Login(){
     
       const config = {
         method: 'post',
-        url: 'http://localhost:8080/login',
+        url: 'hhttp://garaculedgerserver-env.eba-qmqe83ke.us-east-1.elasticbeanstalk.com/login',
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -27,7 +27,7 @@ function Login(){
       };
     
       axios(config).then((response) => {
-        console.log(JSON.stringify(response.data));
+        console.log(response.data);
       }).catch((error) => {
         console.error(error);
       });
@@ -35,6 +35,7 @@ function Login(){
     }
 
     return(
+      <div>
         <Form onSubmit={handleSaveChanges}> 
       <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
         <Form.Label column sm={2}>
@@ -67,8 +68,11 @@ function Login(){
       </Form.Group>
     </Form>
 
+      <Container>
+        <OAuth2Login />
+      </Container>
 
-
+    </div>
     )
 }
 

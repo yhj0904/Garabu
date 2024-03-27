@@ -11,7 +11,7 @@ function Register(){
 
     const handleSaveChanges = async(e:any) =>{
       e.preventDefault();
-      const res = axios.post('http://localhost:8080/join',{
+      const res = axios.post('http://garaculedgerserver-env.eba-qmqe83ke.us-east-1.elasticbeanstalk.com/join',{
         username: name,
         email : email,
         password : password
