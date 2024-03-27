@@ -19,7 +19,7 @@ function Login(){
     
       const config = {
         method: 'post',
-        url: 'hhttp://garaculedgerserver-env.eba-qmqe83ke.us-east-1.elasticbeanstalk.com/login',
+        url: 'http://localhost:8080/login',
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded',
         },
