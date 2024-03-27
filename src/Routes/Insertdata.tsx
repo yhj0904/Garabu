@@ -39,7 +39,7 @@ function Insertdata() {
             memo,
             amounttype,
         };
-        dispatch(updateTransaction(newTransaction));
+      
 
         axios.post('http://localhost:8080/api/v2/ledger',{
             date : newTransaction.date,
@@ -50,6 +50,7 @@ function Insertdata() {
 
         }).then((e)=>{
             alert(JSON.stringify(e.data))
+            dispatch(updateTransaction(newTransaction));
         })
         navigate('/details'); // 세부 정보 페이지로 이동
     };
