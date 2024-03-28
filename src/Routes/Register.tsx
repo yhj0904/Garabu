@@ -1,27 +1,30 @@
 import axios from "axios";
 import { useState } from "react";
 import {Col, Row, Form, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom'
 
 function Register(){
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
 
     const handleSaveChanges = async(e:any) =>{
       e.preventDefault();
-      const res = axios.post('http://localhost:8080/join',{
+      axios.post('http://localhost:8080/join',{
         username: name,
         email : email,
         password : password
       }).then((e)=>{
-        alert(JSON.stringify(e.data))
+        if(e.request.status === 200){
+            navigate("/login");
+            alert("회원 가입 되었습니다.");
+        }
+      }).catch((error) =>{
+        alert(error);
       })
-      
-      console.log(name,email,password);
-      console.log('전송~~')
-          console.log(res)
     }
 
     return(

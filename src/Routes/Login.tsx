@@ -12,25 +12,13 @@ function Login(){
 
     const handleSaveChanges = async(e:any) =>{
       e.preventDefault();
-      const data = qs.stringify({
-        username: name,
-        password: password,
-      });
-    
-      const config = {
-        method: 'post',
-        url: 'http://localhost:8080/login',
-        headers: { 
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        data : data
-      };
-    
-      axios(config).then((response) => {
-        console.log(response.data);
-      }).catch((error) => {
-        console.error(error);
-      });
+
+      axios.post('http://localhost:8080/login',{
+        username : name,
+        password : password
+        }).then((e)=> {
+          console.log(e)
+        })
     
     }
 
