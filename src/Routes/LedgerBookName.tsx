@@ -50,7 +50,7 @@ function LedgerBookName() {
       </ToggleButtonGroup>
 
             <Container>
-      {' '}<Button variant="outline-info">시작하기</Button>{' '}
+      {' '}<Button variant="outline-info" onClick={handleSaveChanges}>시작하기</Button>{' '}
       </Container>
       </div>
     )   

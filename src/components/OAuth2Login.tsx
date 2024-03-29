@@ -25,6 +25,7 @@ function OAuth2Login() {
       onClick={onNaverLogin}
       style={{ cursor: 'pointer', width: '50px', height: '50px' }}
     />
+    
   </div>
   );
 }
