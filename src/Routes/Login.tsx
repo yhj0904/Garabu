@@ -1,25 +1,38 @@
 import axios from "axios";
 import { useState } from "react";
 import {Col, Row, Form, Button,Container } from "react-bootstrap";
-import qs from "qs";
 import OAuth2Login from "../components/OAuth2Login";
+import { useNavigate } from 'react-router-dom'
 
 function Login(){
 
   
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSaveChanges = async(e:any) =>{
       e.preventDefault();
 
-      axios.post('http://localhost:8080/login',{
-        username : name,
-        password : password
-        }).then((e)=> {
-          console.log(e)
-        })
+      axios.post('http://localhost:8080/login', {
+        username: name,
+        password: password
+      }).then((response) => {
+        console.log(response.headers);
+        // 여기에서 응답 헤더에서 토큰을 추출하고 저장합니다.
+        const accessToken = response.headers['access'];
+       if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        console.log('Access token saved to localStorage');
+        navigate("/book");
+        alert("로그인 완료");
     
+        }else{
+          alert("토큰저장실패")
+        }
+      }).catch((error) => {
+        console.error('Login failed:', error);
+      });
     }
 
     return(
