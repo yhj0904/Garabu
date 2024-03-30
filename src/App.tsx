@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import {Routes,Route} from "react-router-dom"
 import Dashboard from "./Routes/Dashboard"
@@ -11,6 +10,7 @@ import Register from './Routes/Register';
 import Login from './Routes/Login';
 import LedgerBookName from './Routes/LedgerBookName';
 import Category from './Routes/Category';
+import Mypage from './Routes/MyPage';
 
 function App() {
   return (
@@ -52,6 +52,7 @@ function App() {
       <Route path='/book' element={<LedgerBookName/>}/>
       <Route path='/category' element={<Category />} />
       <Route path='/OAuth' element={<OAuthTokenProvider />} />
+      <Route path='/mypage' element={<Mypage />} />
     </Routes>
 
 

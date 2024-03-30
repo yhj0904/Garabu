@@ -12,8 +12,6 @@ function OAuthAccessTokenProvider() {
           const accessToken = response.headers['access'];
            if (accessToken) {
             localStorage.setItem('accessToken', accessToken);
-            console.log('Access token saved to localStorage');
-            alert("엑세스 토큰 저장 완료");
             navigate("/book");
             }
         }).catch((error) => {
@@ -21,7 +19,7 @@ function OAuthAccessTokenProvider() {
        
         });
       }, []);
-      
+
       return null;
 
 }

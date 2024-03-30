@@ -7,12 +7,17 @@ function LedgerBookName() {
   
     const [bookName, setBookName] = useState('');
     const [contribute, setContribute] = useState('');
+    const accessToken = localStorage.getItem('accessToken');
 
     const handleSaveChanges = async(e:any) =>{
         e.preventDefault();
         axios.post('http://localhost:8080/api/v2/book', {
             bookName : bookName,
             memberId : 2
+        },{
+          headers: {
+            'access': accessToken
+          }
         }).then((e)=>{
             alert(JSON.stringify(e.data))
         })
@@ -38,7 +43,7 @@ function LedgerBookName() {
         label="가계부 이름"
         className="mb-3"
       >
-        <Form.Control as="textarea" placeholder="Leave a comment here" />
+        <Form.Control as="textarea" placeholder="Leave a comment here" onChange={(e) =>{setBookName(e.target.value)}} />
       </FloatingLabel>
 
       <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
