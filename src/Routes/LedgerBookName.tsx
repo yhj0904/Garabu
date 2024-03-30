@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {FloatingLabel,Form,ToggleButtonGroup,ToggleButton,Button ,Container   } from 'react-bootstrap';
 
 
 function LedgerBookName() {
-
+  
     const [bookName, setBookName] = useState('');
     const [contribute, setContribute] = useState('');
 
@@ -17,6 +17,7 @@ function LedgerBookName() {
             alert(JSON.stringify(e.data))
         })
     }
+   
 
     const handleUserAddChanges = async(e:any) =>{  
         // 가계부에 유저 삽입 기능

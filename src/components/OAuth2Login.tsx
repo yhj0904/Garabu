@@ -9,6 +9,7 @@ function OAuth2Login() {
 
   const onGoogleLogin = () => {
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    
   };
 
   return (

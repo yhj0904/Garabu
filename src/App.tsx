@@ -2,10 +2,9 @@ import React from 'react';
 import { Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import {Routes,Route} from "react-router-dom"
 import Dashboard from "./Routes/Dashboard"
-import Details from "./Routes/Details"
+import OAuthTokenProvider from "./components/OAuthAccessTokenProvider"
 import Lists from "./Routes/List"
 import Insertdata from './Routes/Insertdata';
-
 import './App.css';
 import TransactionDetail from './Routes/TransactionDetail';
 import Register from './Routes/Register';
@@ -50,11 +49,9 @@ function App() {
       <Route path='*' element={<div>404 not found</div>} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login /> }/>
-     
       <Route path='/book' element={<LedgerBookName/>}/>
-       
-  
-        <Route path='/category' element={<Category />} />
+      <Route path='/category' element={<Category />} />
+      <Route path='/OAuth' element={<OAuthTokenProvider />} />
     </Routes>
 
 
