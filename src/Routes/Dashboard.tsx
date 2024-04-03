@@ -1,4 +1,5 @@
 import { Container, Row, Col, } from "react-bootstrap";
+import CalendarPage from "./CalenderPage";
 
 function Dashboard() {
     return (
@@ -6,7 +7,7 @@ function Dashboard() {
         <Container>
 
             <Row>
-                <Col>달력</Col>
+                <Col><CalendarPage /></Col>
             </Row>
 
             <div>

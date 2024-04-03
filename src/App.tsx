@@ -35,6 +35,9 @@ function App() {
               <NavDropdown.Item href="/book">
                 가계부 만들기
               </NavDropdown.Item>
+              <NavDropdown.Item href="/mypage">
+                My Page
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
