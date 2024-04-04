@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown, Offcanvas, Button} from 'react-bootstrap';
 import {Routes,Route} from "react-router-dom"
 import Dashboard from "./Routes/Dashboard"
 import OAuthTokenProvider from "./components/OAuthAccessTokenProvider"
@@ -11,8 +11,14 @@ import Login from './Routes/Login';
 import LedgerBookName from './Routes/LedgerBookName';
 import Category from './Routes/Category';
 import Mypage from './Routes/MyPage';
+import {useState} from 'react'
 
 function App() {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
 
 
@@ -41,6 +47,26 @@ function App() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
+
+        <Button variant="primary" onClick={handleShow}>
+        Launch
+      </Button>
+
+      <Offcanvas show={show} onHide={handleClose} placement={'end'}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          Some text as placeholder. In real life you can have the elements you
+          have chosen. Like, text, images, lists, etc.
+
+          회원 정보
+
+          가계부 새로 생성.
+
+          공동작업자 등록
+        </Offcanvas.Body>
+      </Offcanvas>
       </Container>
     </Navbar>
 

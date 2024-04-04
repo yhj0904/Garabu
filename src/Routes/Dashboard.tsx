@@ -6,6 +6,10 @@ function Dashboard() {
 
         <Container>
 
+            <div>
+                <h4> 가계부 이름</h4>
+            </div>
+
             <Row>
                 <Col><CalendarPage /></Col>
             </Row>
