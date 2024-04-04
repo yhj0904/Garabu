@@ -7,6 +7,7 @@ import {
     StyledDot,
   } from "../style/style";
   import moment from "moment";
+import { Content } from "react-bootstrap/lib/Tab";
   
   type ValuePiece = Date | null;
   type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -19,6 +20,17 @@ import {
     );
     const attendDay = ["2023-12-03", "2023-12-13"]; // 출석한 날짜 예시
   
+    const dayToAmount = [
+        //일에 표시될햣 총 지출, 수입 데이터
+    ]
+
+    const addContent =({amount}:any)=>{
+        const content =[];
+
+        //각 타일에 컨텐츠 추가.
+
+    }
+
     const handleDateChange = (newDate: Value) => {
       setDate(newDate);
     };
