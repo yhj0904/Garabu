@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dropdown,Fade,Tabs,Tab } from "react-bootstrap";
+import {Tabs,Tab } from "react-bootstrap";
 
 function Category() {
     const [open, setOpen] = useState(false);
