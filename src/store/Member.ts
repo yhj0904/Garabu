@@ -1,30 +1,30 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 
-interface Transaction {
-    username: string;
-
+interface LoginMember {
+    username : string;
+    email : string;
   }
 
-  type TransactionState = Transaction[];
+  type LoginMemberState = LoginMember[];
 
-  const initialState: TransactionState = [{
-    username: ,
-    email: ,
+  const initialState: LoginMemberState = [{
+    username: '',
+    email: '',
 
   }];
 
-  const transactionSlice = createSlice({
+  const MemberTransactionSlice = createSlice({
     name: 'transaction',
     initialState,
     reducers: {
       // 새로운 거래 정보를 배열에 추가하는 액션
-      updateTransaction: (state, action: PayloadAction<Transaction>) => {
+      updateMemberTransaction: (state, action: PayloadAction<LoginMember>) => {
         state.push(action.payload);
       },
     },
   });
 
-  export const { updateTransaction } = transactionSlice.actions;
+  export const { updateMemberTransaction } = MemberTransactionSlice.actions;
 
-export default transactionSlice
+export default MemberTransactionSlice;
