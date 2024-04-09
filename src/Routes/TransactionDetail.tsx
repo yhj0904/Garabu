@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store'; 
+import axios from 'axios';
 const TransactionDetail = () => {
     const transactions = useSelector((state: RootState) => state.transaction);
 
+    useEffect(()=>{
+        axios.get(  )
+    },[])
+    
     return (
         <div>
             <h2>Transaction Details</h2>

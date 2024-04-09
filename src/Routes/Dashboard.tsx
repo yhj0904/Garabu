@@ -1,4 +1,4 @@
-import { Container, Row, Col, } from "react-bootstrap";
+import { Container, Row, Col, Alert, } from "react-bootstrap";
 import CalendarPage from "./CalenderPage";
 import { useEffect,useState } from "react";
 import axios from 'axios';
@@ -12,11 +12,13 @@ function Dashboard() {
     const accessToken = localStorage.getItem('accessToken');
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
     const dispatch = useDispatch();
     
     const newTransaction = {
         username, // id는 예시로 현재 시간의 타임스탬프를 사용
         email, // 'YYYY-MM-DD'
+        error,
     };
 
     useEffect(()=>{
@@ -30,12 +32,19 @@ function Dashboard() {
             setEmail(res.data.email);
             setUserName(res.data.username);
             dispatch(updateMemberTransaction(newTransaction));
+            
+        }) .catch((error) => {
+            if (error.response && error.response.status === 401) {
+                // Handling 401 error
+                setError('Please log in to continue.');
+            }
         })
     },[]);
 
     return (
 
         <Container>
+            {error && <Alert variant="danger">{error}</Alert>}
 
             <div>
                 <h4> 가계부 이름</h4>

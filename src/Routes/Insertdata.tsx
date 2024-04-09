@@ -15,6 +15,7 @@ function Insertdata() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
+    const accessToken = localStorage.getItem('accessToken');
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [amount, setAmount] = useState(0);
     const [creater, setCreater] = useState('');
@@ -47,8 +48,12 @@ function Insertdata() {
             description: newTransaction.contents,
             memo : newTransaction.memo,
             amounttype :newTransaction.amounttype
-
-        }).then((e)=>{
+        },{
+            headers: {
+              'access': accessToken
+            }
+          }
+            ).then((e)=>{
             console.log(JSON.stringify(e))
             dispatch(updateTransaction(newTransaction));
         })

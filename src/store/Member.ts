@@ -4,6 +4,7 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 interface LoginMember {
     username : string;
     email : string;
+    error:string;
   }
 
   type LoginMemberState = LoginMember[];
@@ -11,6 +12,7 @@ interface LoginMember {
   const initialState: LoginMemberState = [{
     username: '',
     email: '',
+    error:'',
 
   }];
 
