@@ -43,6 +43,7 @@ function Insertdata() {
       
 
         axios.post('http://localhost:8080/api/v2/ledger',{
+            // 가계부 제목
             date : newTransaction.date,
             amount: newTransaction.amount,
             description: newTransaction.contents,

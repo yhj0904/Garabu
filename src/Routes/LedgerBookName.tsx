@@ -14,8 +14,7 @@ function LedgerBookName() {
     const handleSaveChanges = async(e:any) =>{
         e.preventDefault();
         axios.post('http://localhost:8080/api/v2/book', {
-            bookName : bookName,
-            memberId : 2
+            title : bookName,
         },{
           headers: {
             'access': accessToken
