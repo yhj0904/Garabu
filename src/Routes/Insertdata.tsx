@@ -54,7 +54,6 @@ function Insertdata() {
             }
           }
             ).then((e)=>{
-            console.log(JSON.stringify(e))
             dispatch(updateTransaction(newTransaction));
         })
         navigate('/details'); // 세부 정보 페이지로 이동

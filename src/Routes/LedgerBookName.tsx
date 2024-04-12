@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {FloatingLabel,Form,ToggleButtonGroup,ToggleButton,Button ,Container   } from 'react-bootstrap';
-
+import { useNavigate } from 'react-router-dom'
 
 function LedgerBookName() {
   
     const [bookName, setBookName] = useState('');
     const [contribute, setContribute] = useState('');
     const accessToken = localStorage.getItem('accessToken');
+    const navigate = useNavigate();
+
 
     const handleSaveChanges = async(e:any) =>{
         e.preventDefault();
@@ -19,7 +21,8 @@ function LedgerBookName() {
             'access': accessToken
           }
         }).then((e)=>{
-            alert(JSON.stringify(e.data))
+          navigate("/");
+            //alert(JSON.stringify(e.data))
         })
     }
    
