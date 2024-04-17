@@ -50,10 +50,6 @@ api.interceptors.response.use(response => {
       
        });   //여기서 오류나서 안댄다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~씨빨~~~~~~~~~~~~~~~~~
      
-     
-
-
-     
       return api(originalRequest);
     } catch (error) {
       console.error('Unable to refresh token', error);
