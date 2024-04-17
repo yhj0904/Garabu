@@ -26,18 +26,38 @@ api.interceptors.response.use(response => {
 }, async error => {
   const originalRequest = error.config;
   if (error.response.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true;
+    originalRequest._retry = true; // 재시도 플래그 설정
     try {
-      const response = await api.post('/reissue', {}, {withCredentials: true});
-
+      // 토큰 재발급 요청
+       axios.post('http://localhost:8080/reissue',{} ,{ withCredentials: true })
+       .then((response) =>{
+        console.log(" 토큰 재발급 성공")
+         console.log(response.headers);
+          // 기존 토큰 삭제
+        console.log("기존 토큰 삭제")
+          localStorage.removeItem('accessToken');
+          
       // 새로운 토큰 저장하고 원래 요청 다시 시도
-      const { accessToken } = response.data;
-      localStorage.setItem('accessToken', accessToken);
-      api.defaults.headers.common['access'] = accessToken;
+         const accessToken = response.headers['access'];
+         
+          if (accessToken) {
+            localStorage.setItem('accessToken', accessToken);
+            api.defaults.headers.common['access'] = accessToken;
+            console.log("토큰 교체 완료")
+           }
+       }).catch((error) => {
+           console.error('Access token reissue failed:', error);
+      
+       });   //여기서 오류나서 안댄다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~씨빨~~~~~~~~~~~~~~~~~
+     
+     
 
+
+     
       return api(originalRequest);
     } catch (error) {
       console.error('Unable to refresh token', error);
+      // 여기서 에러를 처리하고 더 이상 재시도하지 않음
       return Promise.reject(error);
     }
   }
