@@ -13,17 +13,15 @@ function CategoryDetail(params: any) {
     const [resData, setResData] = useState<Category[]>([]);
 
     useEffect(() => {
-        api.get('http://localhost:8080/api/v2/category/list', {
+        api.get('/api/v2/category/list', {
         }).then((e) => {
-            console.log(JSON.stringify(e.data.categories))
             setResData(e.data.categories)
-            console.log(resData)
         })
     }, [])
 
     const categoryhandleSaveChanges = async (e: any) => {
         e.preventDefault();
-        api.post('http://localhost:8080/api/v2/category', {
+        api.post('/api/v2/category', {
             category: categoryName
         }).then((e) => {
            // alert(JSON.stringify(e.data))

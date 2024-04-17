@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const api = axios.create({
-  baseURL: 'https://your-api-url.com',
+  baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -28,7 +28,7 @@ api.interceptors.response.use(response => {
   if (error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true;
     try {
-      const response = await api.post('http://localhost:8080/reissue', {}, {withCredentials: true});
+      const response = await api.post('/reissue', {}, {withCredentials: true});
 
       // 새로운 토큰 저장하고 원래 요청 다시 시도
       const { accessToken } = response.data;

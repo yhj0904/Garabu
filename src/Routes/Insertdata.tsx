@@ -5,7 +5,7 @@ import { updateTransaction } from "../store/createSlice";
 import { RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/axios"; 
 
 function Insertdata() {
     const transactionData = useSelector((state: RootState) => { return state.transaction });
@@ -14,8 +14,7 @@ function Insertdata() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    const accessToken = localStorage.getItem('accessToken');
+ 
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [amount, setAmount] = useState(0);
     const [creater, setCreater] = useState('');
@@ -42,18 +41,14 @@ function Insertdata() {
         };
       
 
-        axios.post('http://localhost:8080/api/v2/ledger',{
+        api.post('/api/v2/ledger',{
             // 가계부 제목
             date : newTransaction.date,
             amount: newTransaction.amount,
             description: newTransaction.contents,
             memo : newTransaction.memo,
             amounttype :newTransaction.amounttype
-        },{
-            headers: {
-              'access': accessToken
-            }
-          }
+        }
             ).then((e)=>{
             dispatch(updateTransaction(newTransaction));
         })

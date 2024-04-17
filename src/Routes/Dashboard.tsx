@@ -1,7 +1,7 @@
 import { Container, Row, Col, Alert, } from "react-bootstrap";
 import CalendarPage from "./CalenderPage";
 import { useEffect,useState } from "react";
-import axios from 'axios';
+import api from "../api/axios";
 import { RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import {updateMemberTransaction} from '../store/Member'
@@ -22,11 +22,7 @@ function Dashboard() {
     };
 
     useEffect(()=>{
-        axios.get('http://localhost:8080/user/me',{
-            headers: {
-              'access': accessToken
-            }
-          })
+        api.get('/user/me')
         .then((res:any) => {
             console.log(res);
             setEmail(res.data.email);

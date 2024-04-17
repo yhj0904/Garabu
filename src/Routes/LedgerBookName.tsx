@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../api/axios';
 import { useState } from 'react';
 import {FloatingLabel,Form,ToggleButtonGroup,ToggleButton,Button ,Container   } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
@@ -12,12 +12,8 @@ function LedgerBookName() {
 
     const handleSaveChanges = async(e:any) =>{
         e.preventDefault();
-        axios.post('http://localhost:8080/api/v2/book', {
+        api.post('/api/v2/book', {
             title : bookName,
-        },{
-          headers: {
-            'access': accessToken
-          }
         }).then((e)=>{
           navigate("/");
             //alert(JSON.stringify(e.data))
@@ -30,7 +26,7 @@ function LedgerBookName() {
         // 함께하기를 선택하면 유저를 초대할수 있음. 초대방식 미정. 여러 사용자가 한 가계부를 소유할수 있음. 소유한 가계부를 조회해야함
         e.preventDefault();
 
-        axios.post('http://localhost:8080/api/v2/userbook', {
+        api.post('/api/v2/userbook', {
             memberId : 2
         }).then((e)=>{
             alert(JSON.stringify(e.data))

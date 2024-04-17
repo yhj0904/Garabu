@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../api/axios';
 import { useEffect, useState } from 'react';
 import {updateMemberTransaction} from '../store/Member'
 import { useDispatch, } from "react-redux";
@@ -21,11 +21,7 @@ function Mypage() {
   };
 
     useEffect(()=>{
-        axios.get('http://localhost:8080/user/me',{
-            headers: {
-              'access': accessToken
-            }
-          })
+      api.get('/user/me')
         .then((res:any) => {
             console.log(res);
             setEmail(res.data.email);
