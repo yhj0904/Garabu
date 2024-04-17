@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 function LedgerBookName() {
   
     const [bookName, setBookName] = useState('');
-    const [contribute, setContribute] = useState('');
     const accessToken = localStorage.getItem('accessToken');
     const navigate = useNavigate();
 
