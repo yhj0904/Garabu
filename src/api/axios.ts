@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { redirect } from 'react-router-dom';
 
 // Axios 인스턴스 생성
 const api = axios.create({
@@ -47,7 +48,7 @@ api.interceptors.response.use(response => {
            }
        }).catch((error) => {
            console.error('Access token reissue failed:', error);
-      
+           redirect("/login");
        });   //여기서 오류나서 안댄다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~씨빨~~~~~~~~~~~~~~~~~
      
       return api(originalRequest);
