@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store'; 
-import axios from 'axios';
+import api from '../api/axios';
+
+
 const TransactionDetail = () => {
     const transactions = useSelector((state: RootState) => state.transaction);
     const accessToken = localStorage.getItem('accessToken');
 
-   
     useEffect(()=>{
-        axios.post('http://localhost:8080/api/v2/ledger/list', {
+        api.post('http://localhost:8080/api/v2/ledger/list', {
 
-        },{
-            headers: {
-                'access': accessToken
-              }
-          })
+        })
           .then((res:any) => {
             console.log(res.data); 
         })

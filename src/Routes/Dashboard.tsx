@@ -1,41 +1,47 @@
-import { Container, Row, Col, Alert, } from "react-bootstrap";
-import CalendarPage from "./CalenderPage";
-import { useEffect,useState } from "react";
+import { Container, Row, Col, Alert, FloatingLabel, Form } from "react-bootstrap";
+import CalendarPage from "./CalendarPage";
+import { useEffect, useState } from "react";
 import api from "../api/axios";
-import { RootState } from "../store/store";
+import { AppDispatch, RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import {updateMemberTransaction} from '../store/Member'
-
+import { updateMemberTransaction } from '../store/Member'
+import { addBookName, fetchMemberTransaction } from '../store/LoggedInUserInfo'
 
 function Dashboard() {
     const transactionData = useSelector((state: RootState) => { return state.LoginMember });
-    const accessToken = localStorage.getItem('accessToken');
+    const LoggedInInfo = useSelector((state: RootState) => state.LoggedInMember);
+
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    const dispatch = useDispatch();
-    
-    const newTransaction = {
-        username, // id는 예시로 현재 시간의 타임스탬프를 사용
-        email, // 'YYYY-MM-DD'
-        error,
-    };
+    const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(()=>{
-        api.get('/user/me')
+    useEffect(() => {
+        /*api.get('/user/me')
         .then((res:any) => {
             console.log(res);
             setEmail(res.data.email);
             setUserName(res.data.username);
-            dispatch(updateMemberTransaction(newTransaction));
-            
+            dispatch(updateMemberTransaction({ 
+                username: res.data.username, 
+                email: res.data.email,
+                error: '' // 에러 메시지 초기화
+            }));
         }) .catch((error) => {
             if (error.response && error.response.status === 401) {
-                // Handling 401 error
                 setError('Please log in to continue.');
+            } else {
+                setError('An error occurred. Please try again later.');
             }
-        })
-    },[]);
+        });
+
+        api.get('/api/v2/book/mybooks')
+        .then((res:any)=>{
+            console.log(res.data)
+        })*/
+        dispatch(fetchMemberTransaction())
+
+    }, [dispatch]);
 
     return (
 
@@ -43,7 +49,15 @@ function Dashboard() {
             {error && <Alert variant="danger">{error}</Alert>}
 
             <div>
-                <h4> 가계부 이름</h4>
+                <Container>
+                <FloatingLabel controlId="floatingSelect" label=" 가계부 이름 ">
+                    <Form.Select aria-label="Floating label select example">
+                        {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName, index) => (
+                        <option value={index}>{bookName}</option>
+                    ))}
+                    </Form.Select>
+                </FloatingLabel>
+                </Container>
             </div>
 
             <Row>
@@ -51,7 +65,7 @@ function Dashboard() {
             </Row>
 
             <div>
-            <h3> Dashboard</h3>
+                <h3> Dashboard</h3>
             </div>
             <Row>
                 <Col>분류별 지출 그래프</Col>

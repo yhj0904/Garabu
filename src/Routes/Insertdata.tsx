@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateTransaction } from "../store/createSlice";
 import { RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api/axios"; 
 
 function Insertdata() {
     const transactionData = useSelector((state: RootState) => { return state.transaction });
+    const LoggedinMember = useSelector((state: RootState) => {return state.LoginMember});
 
     console.log(transactionData)
 
@@ -24,6 +25,11 @@ function Insertdata() {
     const [contents, setContents] = useState('');
     const [memo, setMemo] = useState('');
     const [amounttype, setAmounttype] = useState('');
+
+
+    useEffect(()=>{
+        console.log(LoggedinMember.username)
+    },[])
 
 
     const handleSaveChanges = async() => {
@@ -60,6 +66,8 @@ function Insertdata() {
             <Row>
                 <Col>
                     <Stack>
+                        <Form.Label htmlFor="inputCreateUser"> 가계부 이름 </Form.Label>
+                        <Form.Control type="text" placeholder={LoggedinMember.username} />
                         <Form.Label htmlFor="inputDate">날짜</Form.Label>
                         <DateInput  selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
                         <Form.Label htmlFor="inputCount">금액</Form.Label>
@@ -69,12 +77,7 @@ function Insertdata() {
                             onChange={(e) => setAmount(Number(e.target.value))}
                         />
                         <Form.Label htmlFor="inputCreateUser">작성자</Form.Label>
-                        <Form.Select aria-label="Who" name="creater" onChange={(e) => setCreater(e.target.value)} >
-                            <option>Who?</option>
-                            <option value="you">you</option>
-                            <option value="me">me</option>
-                            <option value="UnI">UnI</option>
-                        </Form.Select>
+                        <Form.Control type="text" placeholder={LoggedinMember.username} readOnly />
                         <Form.Label htmlFor="inputCustomer">주체</Form.Label>
                         <Form.Select aria-label="User" name="customer" onChange={(e) => setCustomer(e.target.value)}>
                             <option>User?</option>
