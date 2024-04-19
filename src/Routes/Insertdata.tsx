@@ -53,8 +53,7 @@ function Insertdata(props:any) {
             memo : newTransaction.memo,
             amounttype :newTransaction.amounttype,
             bookName: selectedBookName,
-        }
-            ).then((e)=>{
+        }).then((e)=>{
             dispatch(updateTransaction(newTransaction));
         })
         navigate('/details'); // 세부 정보 페이지로 이동
@@ -76,14 +75,15 @@ function Insertdata(props:any) {
                             onChange={handleSelectChange} // onChange 이벤트 핸들러 설정
                             value={selectedBookName} // 선택된 값을 Form.Select의 값으로 설정
                         >
-                        <Form.Label htmlFor="inputCreateUser">작성자</Form.Label>
-                        <Form.Control type="text" placeholder={LoggedInInfo.username} readOnly />
                             {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName:any, index:any) => (
                                 <option value={index}>{bookName}{selectedBookName}</option>
                             ))} 
                         </Form.Select>
                     </FloatingLabel>
+                        <Form.Label htmlFor="inputCreateUser">작성자</Form.Label>
+                        <Form.Control type="text" placeholder={LoggedInInfo.username} readOnly />
                 </Container>
+                
                         <Form.Label htmlFor="inputDate">날짜</Form.Label>
                         <DateInput  selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
                         <Form.Label htmlFor="inputCount">금액</Form.Label>
