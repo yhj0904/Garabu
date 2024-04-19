@@ -4,44 +4,37 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { AppDispatch, RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { updateMemberTransaction } from '../store/Member'
-import { addBookName, fetchMemberTransaction } from '../store/LoggedInUserInfo'
+import { fetchMemberTransaction } from '../store/LoggedInUserInfo'
 
 function Dashboard() {
-    const transactionData = useSelector((state: RootState) => { return state.LoginMember });
+
     const LoggedInInfo = useSelector((state: RootState) => state.LoggedInMember);
 
-    const [username, setUserName] = useState('');
-    const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    // 선택된 bookName의 상태를 관리합니다. 초기값은 null이거나 첫 번째 bookName의 인덱스(있는 경우)
+    const [selectedBookName, setSelectedBookName] = useState(LoggedInInfo.bookNames.length > 0 ? LoggedInInfo.bookNames[0] : '');
+
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        /*api.get('/user/me')
-        .then((res:any) => {
-            console.log(res);
-            setEmail(res.data.email);
-            setUserName(res.data.username);
-            dispatch(updateMemberTransaction({ 
-                username: res.data.username, 
-                email: res.data.email,
-                error: '' // 에러 메시지 초기화
-            }));
-        }) .catch((error) => {
-            if (error.response && error.response.status === 401) {
-                setError('Please log in to continue.');
-            } else {
-                setError('An error occurred. Please try again later.');
-            }
-        });
-
-        api.get('/api/v2/book/mybooks')
-        .then((res:any)=>{
-            console.log(res.data)
-        })*/
         dispatch(fetchMemberTransaction())
+            .then(() => {
+                console.log("dispatch")
+                console.log(LoggedInInfo)
+            }).catch((error) => {
+                if (error.response && error.response.status === 401) {
+                    setError('Please log in to continue.');
+                } else if (error.response && error.response.status >= 401) {
+                    setError('An error occurred. Please try again later.');
+                }
+            })
+          
+    }, []);
 
-    }, [dispatch]);
+    const handleSelectChange = (event:any) => {
+        setSelectedBookName(LoggedInInfo.bookNames[event.target.value]);
+        
+    };
 
     return (
 
@@ -50,13 +43,16 @@ function Dashboard() {
 
             <div>
                 <Container>
-                <FloatingLabel controlId="floatingSelect" label=" 가계부 이름 ">
-                    <Form.Select aria-label="Floating label select example">
-                        {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName, index) => (
-                        <option value={index}>{bookName}</option>
-                    ))}
-                    </Form.Select>
-                </FloatingLabel>
+                    <FloatingLabel controlId="floatingSelect" label=" 가계부 이름 ">
+                        <Form.Select aria-label="Floating label select example"
+                            onChange={handleSelectChange} // onChange 이벤트 핸들러 설정
+                            value={selectedBookName} // 선택된 값을 Form.Select의 값으로 설정
+                        >
+                            {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName:any, index:any) => (
+                                <option value={index}>{bookName}</option>
+                            ))}
+                        </Form.Select>
+                    </FloatingLabel>
                 </Container>
             </div>
 
@@ -81,3 +77,27 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+
+/*api.get('/user/me')
+.then((res:any) => {
+    console.log(res);
+    setEmail(res.data.email);
+    setUserName(res.data.username);
+    dispatch(updateMemberTransaction({ 
+        username: res.data.username, 
+        email: res.data.email,
+        error: '' // 에러 메시지 초기화
+    }));
+}) .catch((error) => {
+    if (error.response && error.response.status === 401) {
+        setError('Please log in to continue.');
+    } else {
+        setError('An error occurred. Please try again later.');
+    }
+});
+
+api.get('/api/v2/book/mybooks')
+.then((res:any)=>{
+    console.log(res.data)
+})*/

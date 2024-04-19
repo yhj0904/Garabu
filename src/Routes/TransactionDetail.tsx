@@ -20,7 +20,7 @@ const TransactionDetail = () => {
     return (
         <div>
             <h2>Transaction Details</h2>
-            {transactions.map((transaction, index) => (
+            {transactions.map((transaction:any, index:any) => (
                 <div key={index}>
                     <h3>Transaction {index + 1}</h3>
                     <p>Date: {transaction.date}</p>

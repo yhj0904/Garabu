@@ -1,17 +1,15 @@
-import { Form, Container, Row, Col, Stack, Button } from "react-bootstrap";
+import { Form, Container, Row, Col, Stack, Button,FloatingLabel } from "react-bootstrap";
 import DateInput from "../components/DateInput";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTransaction } from "../store/createSlice";
-import { RootState } from "../store/store";
+import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios"; 
 
-function Insertdata() {
+function Insertdata(props:any) {
     const transactionData = useSelector((state: RootState) => { return state.transaction });
-    const LoggedinMember = useSelector((state: RootState) => {return state.LoginMember});
-
-    console.log(transactionData)
+    const LoggedInInfo = useSelector((state: RootState) => state.LoggedInMember);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,12 +23,11 @@ function Insertdata() {
     const [contents, setContents] = useState('');
     const [memo, setMemo] = useState('');
     const [amounttype, setAmounttype] = useState('');
-
+     const [selectedBookName, setSelectedBookName] = useState('');
 
     useEffect(()=>{
-        console.log(LoggedinMember.username)
+        
     },[])
-
 
     const handleSaveChanges = async() => {
         const newTransaction = {
@@ -45,15 +42,17 @@ function Insertdata() {
             memo,
             amounttype,
         };
-      
-
         api.post('/api/v2/ledger',{
             // 가계부 제목
             date : newTransaction.date,
             amount: newTransaction.amount,
+            spender: newTransaction.customer,
             description: newTransaction.contents,
+            category: newTransaction.category,
+            payment: newTransaction.asset,
             memo : newTransaction.memo,
-            amounttype :newTransaction.amounttype
+            amounttype :newTransaction.amounttype,
+            bookName: selectedBookName,
         }
             ).then((e)=>{
             dispatch(updateTransaction(newTransaction));
@@ -61,13 +60,30 @@ function Insertdata() {
         navigate('/details'); // 세부 정보 페이지로 이동
     };
 
+    const handleSelectChange = (event:any) => {
+        setSelectedBookName(LoggedInInfo.bookNames[event.target.value]);
+        
+    };
+
     return (
         <Container>
             <Row>
                 <Col>
                     <Stack>
-                        <Form.Label htmlFor="inputCreateUser"> 가계부 이름 </Form.Label>
-                        <Form.Control type="text" placeholder={LoggedinMember.username} />
+                    <Container>
+                    <FloatingLabel controlId="floatingSelect" label=" 가계부 이름 ">
+                        <Form.Select aria-label="Floating label select example"
+                            onChange={handleSelectChange} // onChange 이벤트 핸들러 설정
+                            value={selectedBookName} // 선택된 값을 Form.Select의 값으로 설정
+                        >
+                        <Form.Label htmlFor="inputCreateUser">작성자</Form.Label>
+                        <Form.Control type="text" placeholder={LoggedInInfo.username} readOnly />
+                            {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName:any, index:any) => (
+                                <option value={index}>{bookName}{selectedBookName}</option>
+                            ))} 
+                        </Form.Select>
+                    </FloatingLabel>
+                </Container>
                         <Form.Label htmlFor="inputDate">날짜</Form.Label>
                         <DateInput  selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
                         <Form.Label htmlFor="inputCount">금액</Form.Label>
@@ -76,8 +92,7 @@ function Insertdata() {
                             id="inputCount"
                             onChange={(e) => setAmount(Number(e.target.value))}
                         />
-                        <Form.Label htmlFor="inputCreateUser">작성자</Form.Label>
-                        <Form.Control type="text" placeholder={LoggedinMember.username} readOnly />
+                       
                         <Form.Label htmlFor="inputCustomer">주체</Form.Label>
                         <Form.Select aria-label="User" name="customer" onChange={(e) => setCustomer(e.target.value)}>
                             <option>User?</option>
