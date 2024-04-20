@@ -1,19 +1,19 @@
-import { Form, Container, Row, Col, Stack, Button,FloatingLabel } from "react-bootstrap";
+import { Form, Container, Row, Col, Stack, Button, FloatingLabel, Accordion, ListGroup } from "react-bootstrap";
 import DateInput from "../components/DateInput";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTransaction } from "../store/createSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../api/axios"; 
+import api from "../api/axios";
 
-function Insertdata(props:any) {
+function Insertdata(props: any) {
     const transactionData = useSelector((state: RootState) => { return state.transaction });
     const LoggedInInfo = useSelector((state: RootState) => state.LoggedInMember);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
- 
+
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [amount, setAmount] = useState(0);
     const [creater, setCreater] = useState('');
@@ -23,13 +23,13 @@ function Insertdata(props:any) {
     const [contents, setContents] = useState('');
     const [memo, setMemo] = useState('');
     const [amounttype, setAmounttype] = useState('');
-     const [selectedBookName, setSelectedBookName] = useState('');
+    const [selectedBookName, setSelectedBookName] = useState(LoggedInInfo.bookNames.length > 0 ? LoggedInInfo.bookNames[0] : '');
 
-    useEffect(()=>{
-        
-    },[])
+    useEffect(() => {
 
-    const handleSaveChanges = async() => {
+    }, [])
+
+    const handleSaveChanges = async () => {
         const newTransaction = {
             id: Date.now(), // id는 예시로 현재 시간의 타임스탬프를 사용
             date: selectedDate.toISOString().slice(0, 10), // 'YYYY-MM-DD'
@@ -42,57 +42,72 @@ function Insertdata(props:any) {
             memo,
             amounttype,
         };
-        api.post('/api/v2/ledger',{
+        api.post('/api/v2/ledger', {
             // 가계부 제목
-            date : newTransaction.date,
+            date: newTransaction.date,
             amount: newTransaction.amount,
             spender: newTransaction.customer,
             description: newTransaction.contents,
             category: newTransaction.category,
             payment: newTransaction.asset,
-            memo : newTransaction.memo,
-            amounttype :newTransaction.amounttype,
+            memo: newTransaction.memo,
+            amountType: newTransaction.amounttype,
             bookName: selectedBookName,
-        }).then((e)=>{
+        }).then((e) => {
             dispatch(updateTransaction(newTransaction));
+            console.log(newTransaction)
+            console.log(selectedBookName)
+
         })
         navigate('/details'); // 세부 정보 페이지로 이동
     };
 
-    const handleSelectChange = (event:any) => {
-        setSelectedBookName(LoggedInInfo.bookNames[event.target.value]);
-        
+    const handleSelectBookName = (bookName: string) => {
+        setSelectedBookName(bookName);
+        console.log(bookName); // Logging the book name directly
     };
-
     return (
         <Container>
             <Row>
                 <Col>
                     <Stack>
-                    <Container>
-                    <FloatingLabel controlId="floatingSelect" label=" 가계부 이름 ">
-                        <Form.Select aria-label="Floating label select example"
-                            onChange={handleSelectChange} // onChange 이벤트 핸들러 설정
-                            value={selectedBookName} // 선택된 값을 Form.Select의 값으로 설정
-                        >
-                            {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName:any, index:any) => (
-                                <option value={index}>{bookName}{selectedBookName}</option>
-                            ))} 
-                        </Form.Select>
-                    </FloatingLabel>
-                        <Form.Label htmlFor="inputCreateUser">작성자</Form.Label>
-                        <Form.Control type="text" placeholder={LoggedInInfo.username} readOnly />
-                </Container>
-                
+                        <Container>
+                        <Accordion >
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>{selectedBookName}</Accordion.Header>
+                                <Accordion.Body>
+                                    <ListGroup>
+                                        {LoggedInInfo.bookNames.map((bookName: string, index: number) => (
+                                            <ListGroup.Item
+                                                key={index}
+                                                action
+                                                variant="secondary"
+                                                onClick={() => handleSelectBookName(bookName)}
+                                                active={selectedBookName === bookName}
+                                            >
+                                                {bookName}
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                           
+                         
+
+                            <Form.Label htmlFor="inputCreateUser">작성자</Form.Label>
+                            <Form.Control type="text" placeholder={LoggedInInfo.username} readOnly />
+                        </Container>
+
                         <Form.Label htmlFor="inputDate">날짜</Form.Label>
-                        <DateInput  selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+                        <DateInput selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
                         <Form.Label htmlFor="inputCount">금액</Form.Label>
                         <Form.Control
                             type="number"
                             id="inputCount"
                             onChange={(e) => setAmount(Number(e.target.value))}
                         />
-                       
+
                         <Form.Label htmlFor="inputCustomer">주체</Form.Label>
                         <Form.Select aria-label="User" name="customer" onChange={(e) => setCustomer(e.target.value)}>
                             <option>User?</option>
@@ -120,8 +135,8 @@ function Insertdata(props:any) {
                             <option value="cradit card">cradit card</option>
                             <option value="add">add</option>
                         </Form.Select>
-                        
-                        <Form.Label htmlFor="inputContents">상세 내용 거래내용 제목</Form.Label>  
+
+                        <Form.Label htmlFor="inputContents">상세 내용 거래내용 제목</Form.Label>
                         <Form.Control
                             type="text"
                             id="inputContents"
@@ -169,7 +184,7 @@ function Insertdata(props:any) {
                                     name="amountType"
                                     id="income"
                                     required
-                                    onChange={(e) => setAmounttype('INCOME')}
+                                    onChange={(e) => setAmounttype("INCOME")}
                                 />
                             </div>
                         </Form>
@@ -185,3 +200,14 @@ function Insertdata(props:any) {
 }
 
 export default Insertdata;
+/*
+<FloatingLabel controlId="floatingSelect" label=" 가계부 이름 ">
+<Form.Select aria-label="Floating label select example"
+    onChange={handleSelectBookName} // onChange 이벤트 핸들러 설정
+    value={selectedBookName} // 선택된 값을 Form.Select의 값으로 설정
+>
+    {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName: any, index: any) => (
+        <option value={index}>{bookName}</option>
+    ))}
+</Form.Select>
+</FloatingLabel>*/

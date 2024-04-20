@@ -1,5 +1,5 @@
 import { Container, Nav, Navbar, NavDropdown, Offcanvas, Button} from 'react-bootstrap';
-import {Routes,Route} from "react-router-dom"
+import {Routes,Route,useNavigate } from "react-router-dom"
 import Dashboard from "./Routes/Dashboard"
 import OAuthTokenProvider from "./components/OAuthAccessTokenProvider"
 import Lists from "./Routes/List"
@@ -12,13 +12,28 @@ import LedgerBookName from './Routes/LedgerBookName';
 import Category from './Routes/Category';
 import Mypage from './Routes/MyPage';
 import {useState} from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 function App() {
 
   const [show, setShow] = useState(false);
+  const navigate = useNavigate(); 
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleLogin = () => navigate('/login'); // 로그인 페이지로 이동
+  const handleRegister = () => navigate('/register'); // 회원가입 페이지로 이동
+  const user = useSelector(state => state.auth.user); // Get user from Redux store
+
+  const dispatch = useDispatch();
+ 
+ 
+  const handleLogout = () => {
+    dispatch(logout()); // 로그아웃 액션 디스패치
+};
+
+
   return (
 
 
@@ -47,6 +62,11 @@ function App() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
+
+
+        <Button variant="info" onClick={handleRegister}>회원가입</Button>{' '}
+        <Button variant="outline-info" onClick={handleLogin}>로그인</Button>{' '}
+
 
         <Button variant="primary" onClick={handleShow}>
         Launch

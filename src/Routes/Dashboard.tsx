@@ -1,4 +1,4 @@
-import { Container, Row, Col, Alert, FloatingLabel, Form } from "react-bootstrap";
+import { Container, Row, Col, Alert, Accordion,ListGroup } from "react-bootstrap";
 import CalendarPage from "./CalendarPage";
 import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
@@ -30,9 +30,9 @@ function Dashboard() {
           
     }, []);
 
-    const handleSelectChange = (event:any) => {
-        setSelectedBookName(LoggedInInfo.bookNames[event.target.value]);
-        
+    const handleSelectBookName = (bookName: string) => {
+        setSelectedBookName(bookName);
+        console.log(bookName); // Logging the book name directly
     };
 
     return (
@@ -42,16 +42,27 @@ function Dashboard() {
 
             <div>
                 <Container>
-                    <FloatingLabel controlId="floatingSelect" label=" 가계부 이름 ">
-                        <Form.Select aria-label="Floating label select example"
-                            onChange={handleSelectChange} // onChange 이벤트 핸들러 설정
-                            value={selectedBookName} // 선택된 값을 Form.Select의 값으로 설정
-                        >
-                            {LoggedInInfo.bookNames && LoggedInInfo.bookNames.map((bookName:any, index:any) => (
-                                <option value={index}>{bookName}</option>
-                            ))}
-                        </Form.Select>
-                    </FloatingLabel>
+                <Accordion >
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>{selectedBookName}</Accordion.Header>
+                                <Accordion.Body>
+                                    <ListGroup>
+                                        {LoggedInInfo.bookNames.map((bookName: string, index: number) => (
+                                            <ListGroup.Item
+                                                key={index}
+                                                action
+                                                variant="secondary"
+                                                onClick={() => handleSelectBookName(bookName)}
+                                                active={selectedBookName === bookName}
+                                            >
+                                                {bookName}
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                           
                 </Container>
             </div>
 

@@ -4,13 +4,14 @@ import membertransactionReducer from './Member';
 import LoggedInMemberInfoReducer from './LoggedInUserInfo';
 import { persistReducer, persistStore } from 'redux-persist';
 import storageSession from "redux-persist/lib/storage/session"; // sessionStorage를 사용할 경우
-
+import authReducer from './Auth';
 
 // Create a root reducer object
 const rootReducer = combineReducers({
     transaction: transactionReducer.reducer,
     LoginMember: membertransactionReducer.reducer,
     LoggedInMember: LoggedInMemberInfoReducer.reducer,
+    auth: authReducer,
 });
 
 // Configuration for redux-persist
