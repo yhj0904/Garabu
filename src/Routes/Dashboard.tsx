@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMemberTransaction } from '../store/LoggedInUserInfo'
+import LoginState from "../components/LoginState";
 
 function Dashboard() {
 
@@ -16,17 +17,19 @@ function Dashboard() {
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
+           
+
         dispatch(fetchMemberTransaction())
-            .then(() => {
-                console.log("dispatch")
-                console.log(LoggedInInfo)
-            }).catch((error) => {
-                if (error.response && error.response.status === 401) {
-                    setError('Please log in to continue.');
-                } else if (error.response && error.response.status >= 401) {
-                    setError('An error occurred. Please try again later.');
-                }
-            })
+        .then(() => {
+            console.log("dispatch")
+            console.log(LoggedInInfo)
+        }).catch((error) => {
+            if (error.response && error.response.status === 401) {
+                setError('Please log in to continue.');
+            } else if (error.response && error.response.status >= 401) {
+                setError('An error occurred. Please try again later.');
+            }
+        })
           
     }, []);
 
@@ -38,6 +41,7 @@ function Dashboard() {
     return (
 
         <Container>
+             <LoginState />
             {error && <Alert variant="danger">{error}</Alert>}
 
             <div>

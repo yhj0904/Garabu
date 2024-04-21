@@ -11,9 +11,10 @@ import Login from './Routes/Login';
 import LedgerBookName from './Routes/LedgerBookName';
 import Category from './Routes/Category';
 import Mypage from './Routes/MyPage';
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-
+import api from './api/axios';
+import { persistor } from './store/store';
 
 function App() {
 
@@ -24,13 +25,19 @@ function App() {
   const handleShow = () => setShow(true);
   const handleLogin = () => navigate('/login'); // 로그인 페이지로 이동
   const handleRegister = () => navigate('/register'); // 회원가입 페이지로 이동
-  const user = useSelector(state => state.auth.user); // Get user from Redux store
+  //const user = useSelector(state => state.auth.user); // Get user from Redux store
 
   const dispatch = useDispatch();
  
  
   const handleLogout = () => {
-    dispatch(logout()); // 로그아웃 액션 디스패치
+    localStorage.removeItem('accessToken');
+    persistor.purge();
+      api.post("/logout",{},{ withCredentials: true })
+      .then( (res:any) => {
+        console.log(res)
+      })
+   // dispatch(logout()); // 로그아웃 액션 디스패치
 };
 
 
@@ -66,7 +73,7 @@ function App() {
 
         <Button variant="info" onClick={handleRegister}>회원가입</Button>{' '}
         <Button variant="outline-info" onClick={handleLogin}>로그인</Button>{' '}
-
+        <Button variant="outline-warning" onClick={handleLogout}> 로그아웃</Button>{' '}
 
         <Button variant="primary" onClick={handleShow}>
         Launch

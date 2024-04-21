@@ -23,7 +23,7 @@ function Login(){
        if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
         console.log('Access token saved to localStorage');
-        navigate("/book");
+        navigate("/");
         alert("로그인 완료");
     
         }else{

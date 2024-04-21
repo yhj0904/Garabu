@@ -1,4 +1,5 @@
 import axios from "axios";
+import api from "../api/axios";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 
@@ -12,7 +13,18 @@ function OAuthAccessTokenProvider() {
           const accessToken = response.headers['access'];
            if (accessToken) {
             localStorage.setItem('accessToken', accessToken);
-            navigate("/book");
+        
+            api.get("/api/v2/book/mybooks")
+            .then((res) => {
+                if (res.data && res.data.length > 0) {
+                    navigate("/"); // Navigate to home if data exists
+                } else {
+                    console.error("No books found or empty data.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching books:", error);
+            });
             }
         }).catch((error) => {
             console.error('Access token reissue failed:', error);
