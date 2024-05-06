@@ -16,10 +16,12 @@ function OAuthAccessTokenProvider() {
         
             api.get("/api/v2/book/mybooks")
             .then((res) => {
+                console.log(res)
                 if (res.data && res.data.length > 0) {
                     navigate("/"); // Navigate to home if data exists
                 } else {
                     console.error("No books found or empty data.");
+                    navigate("/book");
                 }
             })
             .catch((error) => {

@@ -21,6 +21,10 @@ function App() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate(); 
 
+
+  // 사용자의 로그인 상태를 저장하는 상태 변수
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleLogin = () => navigate('/login'); // 로그인 페이지로 이동
@@ -36,6 +40,8 @@ function App() {
       api.post("/logout",{},{ withCredentials: true })
       .then( (res:any) => {
         console.log(res)
+        // 로그아웃 처리 함수
+        setIsLoggedIn(false);
       })
    // dispatch(logout()); // 로그아웃 액션 디스패치
 };
@@ -71,9 +77,14 @@ function App() {
         </Navbar.Collapse>
 
 
-        <Button variant="info" onClick={handleRegister}>회원가입</Button>{' '}
-        <Button variant="outline-info" onClick={handleLogin}>로그인</Button>{' '}
-        <Button variant="outline-warning" onClick={handleLogout}> 로그아웃</Button>{' '}
+        {isLoggedIn ? (   // 로그아웃 버튼 다른곳으로 이동시키기
+        <Button variant="outline-warning" onClick={handleLogout}>로그아웃</Button>
+      ) : (
+        <>
+          <Button variant="info" onClick={handleRegister}>회원가입</Button>{' '}
+          <Button variant="outline-info" onClick={handleLogin}>로그인</Button>
+        </>
+      )}
 
         <Button variant="primary" onClick={handleShow}>
         Launch
@@ -92,6 +103,7 @@ function App() {
           가계부 새로 생성.
 
           공동작업자 등록
+          <Button variant="outline-warning" onClick={handleLogout}>로그아웃</Button>
         </Offcanvas.Body>
       </Offcanvas>
       </Container>
