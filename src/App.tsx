@@ -15,9 +15,10 @@ import {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import api from './api/axios';
 import { persistor } from './store/store';
+import GarabuLogo from './GarabuLogo.png';
 
 function App() {
-
+  <img src={GarabuLogo} className="App-logo" alt="logo" />
   const [show, setShow] = useState(false);
   const navigate = useNavigate(); 
 
