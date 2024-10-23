@@ -2,10 +2,13 @@ import axios from "axios";
 import api from "../api/axios";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
-
+import { loginSuccess } from '../store/LoginStatusSlice';
+import { useDispatch } from 'react-redux';
 
 function OAuthAccessTokenProvider() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
     useEffect(() => {
         axios.post('http://localhost:8080/reissue',{} ,{ withCredentials: true })
         .then((response) =>{
@@ -18,6 +21,8 @@ function OAuthAccessTokenProvider() {
             .then((res) => {
                 console.log(res)
                 if (res.data && res.data.length > 0) {
+                    const hasAccessToken = !!localStorage.getItem('accessToken');
+                    dispatch(loginSuccess({ accessToken: hasAccessToken}))
                     navigate("/"); // Navigate to home if data exists
                 } else {
                     console.error("No books found or empty data.");
