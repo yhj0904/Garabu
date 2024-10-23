@@ -17,6 +17,7 @@ import api from './api/axios';
 import { logout } from './store/LoginStatusSlice';
 import { persistor, RootState  } from './store/store';
 import GarabuLogo from './GarabuLogo.png';
+import LoginState from './components/LoginState';
 
 function App() {
   <img src={GarabuLogo} className="App-logo" alt="logo" />
@@ -44,11 +45,10 @@ function App() {
 
 
   return (
-
-
     <div className="App">
       <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
+      <LoginState />
         <Navbar.Brand href="/">Garabu</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

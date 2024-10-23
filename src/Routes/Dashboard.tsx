@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMemberTransaction } from '../store/LoggedInUserInfo'
-import LoginState from "../components/LoginState";
+
 
 function Dashboard() {
 
@@ -40,7 +40,6 @@ function Dashboard() {
     return (
 
         <Container>
-             <LoginState />
             {error && <Alert variant="danger">{error}</Alert>}
 
             <div>

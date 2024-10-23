@@ -10,7 +10,7 @@ function LoginStatus() {
     //refresh 토큰은 httpOnly라서 클라이언트에선 접근 불가
     
     useEffect(() => {
-       // console.log("로그인 판별기 ...")
+       console.log("로그인 판별기 ...")
         // const refreshToken = cookies.refresh;
         // console.log('쿠키에서 가져온 refreshToken:', refreshToken);
 
@@ -20,11 +20,11 @@ function LoginStatus() {
 
         // 두 조건 모두 충족하면 로그인됨
         if (hasAccessToken) {
-            //console.log("로그인 되어있습니다.");
+            console.log("로그인 되어있습니다.");
             dispatch(loginSuccess({ accessToken: hasAccessToken}))
         }
         else if(!hasAccessToken){
-            //console.log(" 로그인 안돼있음 ");
+            console.log(" 로그인 안돼있음 ");
         }
     }, []);
 
