@@ -14,37 +14,32 @@ import Mypage from './Routes/MyPage';
 import {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import api from './api/axios';
-import { persistor } from './store/store';
+import { logout } from './store/LoginStatusSlice';
+import { persistor, RootState  } from './store/store';
 import GarabuLogo from './GarabuLogo.png';
 
 function App() {
   <img src={GarabuLogo} className="App-logo" alt="logo" />
   const [show, setShow] = useState(false);
   const navigate = useNavigate(); 
-
-
-  // 사용자의 로그인 상태를 저장하는 상태 변수
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isAuthenticated = useSelector((state: RootState) => state.LoginStatusSlice.isAuthenticated);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleLogin = () => navigate('/login'); // 로그인 페이지로 이동
   const handleRegister = () => navigate('/register'); // 회원가입 페이지로 이동
-  //const user = useSelector(state => state.auth.user); // Get user from Redux store
 
   const dispatch = useDispatch();
- 
  
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     persistor.purge();
-      api.post("/logout",{},{ withCredentials: true })
+    api.post("/logout",{},{ withCredentials: true })
       .then( (res:any) => {
-        console.log(res)
-        // 로그아웃 처리 함수
-        setIsLoggedIn(false);
+        alert('로그아웃 되었습니다.');
+        dispatch(logout());
+        handleLogin();
       })
-   // dispatch(logout()); // 로그아웃 액션 디스패치
 };
 
 
@@ -78,14 +73,14 @@ function App() {
         </Navbar.Collapse>
 
 
-        {isLoggedIn ? (   // 로그아웃 버튼 다른곳으로 이동시키기
+       {isAuthenticated ? (   // 로그아웃 버튼 다른곳으로 이동시키기
         <Button variant="outline-warning" onClick={handleLogout}>로그아웃</Button>
       ) : (
         <>
           <Button variant="info" onClick={handleRegister}>회원가입</Button>{' '}
           <Button variant="outline-info" onClick={handleLogin}>로그인</Button>
         </>
-      )}
+      )} 
 
         <Button variant="primary" onClick={handleShow}>
         Launch
@@ -104,7 +99,7 @@ function App() {
           가계부 새로 생성.
 
           공동작업자 등록
-          <Button variant="outline-warning" onClick={handleLogout}>로그아웃</Button>
+        
         </Offcanvas.Body>
       </Offcanvas>
       </Container>

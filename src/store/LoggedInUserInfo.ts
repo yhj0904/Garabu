@@ -5,9 +5,10 @@ interface Book {
   title: string;
   owner: {
     email: string;
+    name:string;
     username: string;
   };
-  userBooks: any[];  // 더 정확한 타입 지정이 필요하면 수정하세요.
+  userBooks: any[]; 
 }
 
 interface LoggedInUserInfoState {

@@ -17,12 +17,12 @@ function Login(){
         username: name,
         password: password
       }).then((response) => {
-        console.log(response.headers);
+       // console.log(response.headers);
         // 여기에서 응답 헤더에서 토큰을 추출하고 저장합니다.
         const accessToken = response.headers['access'];
        if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
-        console.log('Access token saved to localStorage');
+        //console.log('Access token saved to localStorage');
         navigate("/");
         alert("로그인 완료");
     
@@ -30,7 +30,7 @@ function Login(){
           alert("토큰저장실패")
         }
       }).catch((error) => {
-        console.error('Login failed:', error);
+       // console.error('Login failed:', error);
       });
     }
 

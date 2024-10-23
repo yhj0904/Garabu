@@ -5,8 +5,6 @@ import { useDispatch, } from "react-redux";
 
 
 function Mypage() {
- 
-    const accessToken = localStorage.getItem('accessToken');
     
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
@@ -23,7 +21,6 @@ function Mypage() {
     useEffect(()=>{
       api.get('/user/me')
         .then((res:any) => {
- 
             setEmail(res.data.email);
             setUserName(res.data.username);
             dispatch(updateMemberTransaction(newTransaction));

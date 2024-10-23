@@ -21,8 +21,7 @@ function Dashboard() {
 
         dispatch(fetchMemberTransaction())
         .then(() => {
-            console.log("dispatch")
-            console.log(LoggedInInfo)
+         
         }).catch((error) => {
             if (error.response && error.response.status === 401) {
                 setError('Please log in to continue.');
