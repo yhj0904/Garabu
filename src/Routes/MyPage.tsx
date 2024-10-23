@@ -23,10 +23,11 @@ function Mypage() {
     useEffect(()=>{
       api.get('/user/me')
         .then((res:any) => {
-            console.log(res);
+ 
             setEmail(res.data.email);
             setUserName(res.data.username);
             dispatch(updateMemberTransaction(newTransaction));
+            console.log(res);
         }).catch((error) => {
             if (error.response && error.response.status === 401) {
                 // Handling 401 error

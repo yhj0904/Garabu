@@ -1,4 +1,5 @@
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import {PayloadAction,createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import api from '../api/axios';
 
 interface LoginMember {
     username : string;
@@ -14,6 +15,16 @@ interface LoginMember {
     error:'',
 
   };
+
+
+  // Async thunk for fetching user data
+export const fetchMemberTransaction = createAsyncThunk(
+  'transaction/fetchMemberTransaction',
+  async () => {
+    const response = await api.get('/api/v2/members');
+    return response.data;
+  }
+);
 
   const MemberTransactionSlice = createSlice({
     name: 'transaction',
